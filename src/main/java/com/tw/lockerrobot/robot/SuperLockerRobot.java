@@ -1,6 +1,7 @@
 package com.tw.lockerrobot.robot;
 
 import com.tw.lockerrobot.bag.Bag;
+import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.locker.LLocker;
 import com.tw.lockerrobot.locker.Locker;
 import com.tw.lockerrobot.locker.MLocker;
@@ -23,6 +24,6 @@ public class SuperLockerRobot extends BaseLockerRobot {
             }
         }
 
-        return null;
+        throw new NoCapacityException();
     }
 }
