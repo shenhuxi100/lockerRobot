@@ -2,11 +2,15 @@ package com.tw.lockerRobot;
 
 
 import com.tw.lockerrobot.exception.NoCapacityException;
-import com.tw.lockerrobot.model.Bag;
-import com.tw.lockerrobot.model.SBag;
-import com.tw.lockerrobot.model.SLocker;
-import com.tw.lockerrobot.model.STicket;
-import com.tw.lockerrobot.model.Storage;
+import com.tw.lockerrobot.bag.Bag;
+import com.tw.lockerrobot.locker.LLocker;
+import com.tw.lockerrobot.locker.MLocker;
+import com.tw.lockerrobot.robot.PrimaryLockerRobot;
+import com.tw.lockerrobot.bag.SBag;
+import com.tw.lockerrobot.locker.SLocker;
+import com.tw.lockerrobot.ticket.STicket;
+import com.tw.lockerrobot.Storage;
+import com.tw.lockerrobot.robot.SuperLockerRobot;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -17,16 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class LockerRobotBagAdminTest {
-    /*
-
-Given VIP用户S包，Manager有1个S Locker未满
-When Manager存包
-Then 存入S Locker，返回S类型票据
-
-Given VIP用户S包，Manager有1个S Locker已满
-When Manager存包
-Then 无法存入，提示No Capacity
-     */
     @Test
     void should_get_s_ticket_when_xiaoying_save_bag_given_common_user_s_bag_1_unfilled_s_locker() {
         Bag bag = new SBag();
@@ -60,5 +54,29 @@ Then 无法存入，提示No Capacity
         STicket secondTicket = (STicket) xiaoying.saveBag(bag);
 
         assertNotNull(secondTicket);
+    }
+
+    /*
+Given VIP用户S包，Manager有1个S Locker未满
+When Manager存包
+Then 存入S Locker，返回S类型票据
+
+Given VIP用户S包，Manager有1个S Locker已满
+When Manager存包
+Then 无法存入，提示No Capacity
+     */
+    @Test
+    void should_get_s_ticket_when_manager_save_bag_given_vip_user_s_bag_1_unfilled_s_locker() {
+        SLocker sLocker = new SLocker(1);
+        MLocker primaryLocker = new MLocker(1);
+        LLocker superLocker = new LLocker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
+        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+
+        Bag bag = new SBag();
+        STicket ticket = (STicket) manager.saveBag(bag);
+
+        assertNotNull(ticket);
     }
 }

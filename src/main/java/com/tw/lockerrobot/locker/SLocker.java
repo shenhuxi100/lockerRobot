@@ -1,6 +1,9 @@
-package com.tw.lockerrobot.model;
+package com.tw.lockerrobot.locker;
 
-import com.tw.lockerrobot.exception.NoCapacityException;
+import com.tw.lockerrobot.bag.Bag;
+import com.tw.lockerrobot.bag.SBag;
+import com.tw.lockerrobot.ticket.Ticket;
+import com.tw.lockerrobot.ticket.STicket;
 
 import java.util.HashMap;
 import java.util.Map;
