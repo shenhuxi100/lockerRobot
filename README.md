@@ -75,8 +75,11 @@ Given: 一张M有效票在PrimaryLockerRobot取 When: Manager取包，Then: Prim
 
 Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
 
-Given: 一张S有效票在PrimaryLockerRobot取 When: 小樱取包，Then: 提示Invalid com.tw.lockerrobot.ticket.Ticket Type
 
-Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid com.tw.lockerrobot.ticket.Ticket Type
+Given: 一张无效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket
 
-Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid com.tw.lockerrobot.ticket.Ticket Type
+Given: 一张S有效票在PrimaryLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
+
+Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
+
+Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket Type

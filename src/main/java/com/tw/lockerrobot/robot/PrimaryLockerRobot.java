@@ -2,6 +2,7 @@ package com.tw.lockerrobot.robot;
 
 import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.exception.NoCapacityException;
+import com.tw.lockerrobot.locker.Locker;
 import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.ticket.Ticket;
 
@@ -26,5 +27,17 @@ public class PrimaryLockerRobot {
 
     public int getRemainingCapacity() {
         return lockers.stream().mapToInt(MLocker::getRemainingCapacity).sum();
+    }
+
+    public Bag takeBag(Ticket ticket) {
+        for (Locker locker : lockers) {
+            return locker.takeBag(ticket);
+        }
+
+        throw null;
+    }
+
+    public boolean isValidTicket(Ticket ticket) {
+        return lockers.stream().anyMatch(locker -> locker.isValidTicket(ticket));
     }
 }

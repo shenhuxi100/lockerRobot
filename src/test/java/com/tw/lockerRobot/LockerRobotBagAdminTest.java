@@ -264,10 +264,6 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, returnBag);
     }
 
-    /*
-
-Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLockerRobot返回一个包
-*/
     @Test
     void should_get_bag_when_xiaoying_take_bag_given_valid_L_ticket_and_take_from_SuperLockerRobot() {
         Bag bag = new SBag();
@@ -276,6 +272,26 @@ Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLo
         LTicket ticket = (LTicket) xiaoying.saveBag(bag);
 
         Bag returnBag = primaryLocker.takeBag(ticket);
+
+        assertEquals(bag, returnBag);
+    }
+
+    /**
+     * Given: 一张S有效票在Locker取 When: Manager取包，Then: Locker返回一个包
+     *
+     * Given: 一张M有效票在PrimaryLockerRobot取 When: Manager取包，Then: PrimaryLockerRobot返回一个包
+     *
+     * Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
+     */
+    @Test
+    void should_get_bag_when_manager_take_bag_given_valid_m_ticket_and_take_from_PrimaryLockerRobot() {
+        Bag bag = new MBag();
+        MLocker primaryLocker = new MLocker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
+        Storage manager = new Storage(null, singletonList(primaryLockerRobot), null);
+        MTicket ticket = (MTicket) manager.saveBag(bag);
+
+        Bag returnBag = manager.takeBag(ticket);
 
         assertEquals(bag, returnBag);
     }

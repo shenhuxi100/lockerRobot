@@ -23,4 +23,8 @@ public class Locker {
     public Bag takeBag(Ticket ticket) {
         return lockerMap.get(ticket);
     }
+
+    public boolean isValidTicket(Ticket ticket) {
+        return lockerMap.get(ticket) != null;
+    }
 }
