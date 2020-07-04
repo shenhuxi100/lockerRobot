@@ -3,6 +3,7 @@ package com.tw.lockerRobot;
 
 import com.tw.lockerrobot.bag.LBag;
 import com.tw.lockerrobot.bag.MBag;
+import com.tw.lockerrobot.exception.InvalidTicketException;
 import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.locker.LLocker;
@@ -265,11 +266,11 @@ public class LockerRobotBagAdminTest {
     @Test
     void should_get_bag_when_xiaoying_take_bag_given_valid_L_ticket_and_take_from_SuperLockerRobot() {
         Bag bag = new SBag();
-        LLocker primaryLocker = new LLocker(1);
-        SuperLockerRobot xiaoying = new SuperLockerRobot(singletonList(primaryLocker));
+        LLocker superLocker = new LLocker(1);
+        SuperLockerRobot xiaoying = new SuperLockerRobot(singletonList(superLocker));
         LTicket ticket = (LTicket) xiaoying.saveBag(bag);
 
-        Bag returnBag = primaryLocker.takeBag(ticket);
+        Bag returnBag = superLocker.takeBag(ticket);
 
         assertEquals(bag, returnBag);
     }
@@ -299,9 +300,6 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, returnBag);
     }
 
-    /**
-     * Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
-     */
     @Test
     void should_get_bag_when_manager_take_bag_given_valid_l_ticket_and_take_from_SuperLockerRobot() {
         Bag bag = new LBag();
@@ -313,5 +311,24 @@ public class LockerRobotBagAdminTest {
         Bag returnBag = manager.takeBag(ticket);
 
         assertEquals(bag, returnBag);
+    }
+
+    /**
+     * Given: 一张无效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket
+     *
+     * Given: 一张S有效票在PrimaryLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
+     *
+     * Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
+     *
+     * Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket Type
+     */
+    @Test
+    void should_throw_InvalidTicket_when_xiaoying_take_bag_given_invalid_ticket() {
+        Bag bag = new SBag();
+        LLocker primaryLocker = new LLocker(1);
+        SuperLockerRobot xiaoying = new SuperLockerRobot(singletonList(primaryLocker));
+        xiaoying.saveBag(bag);
+
+        assertThrows(InvalidTicketException.class, () -> primaryLocker.takeBag(new LTicket()));
     }
 }

@@ -1,7 +1,7 @@
 package com.tw.lockerrobot.locker;
 
 import com.tw.lockerrobot.bag.Bag;
-import com.tw.lockerrobot.ticket.MTicket;
+import com.tw.lockerrobot.exception.InvalidTicketException;
 import com.tw.lockerrobot.ticket.Ticket;
 
 import java.util.HashMap;
@@ -21,7 +21,10 @@ public abstract class Locker {
     }
 
     public Bag takeBag(Ticket ticket) {
-        return lockerMap.get(ticket);
+        if (isValidTicket(ticket))
+            return lockerMap.get(ticket);
+
+        throw new InvalidTicketException();
     }
 
     public boolean isValidTicket(Ticket ticket) {
