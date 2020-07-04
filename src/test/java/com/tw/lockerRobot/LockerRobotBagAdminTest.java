@@ -278,9 +278,7 @@ public class LockerRobotBagAdminTest {
 
     /**
      * Given: 一张S有效票在Locker取 When: Manager取包，Then: Locker返回一个包
-     *
-     * Given: 一张M有效票在PrimaryLockerRobot取 When: Manager取包，Then: PrimaryLockerRobot返回一个包
-     *
+     * <p>
      * Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
      */
     @Test
@@ -290,6 +288,24 @@ public class LockerRobotBagAdminTest {
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         Storage manager = new Storage(null, singletonList(primaryLockerRobot), null);
         MTicket ticket = (MTicket) manager.saveBag(bag);
+
+        Bag returnBag = manager.takeBag(ticket);
+
+        assertEquals(bag, returnBag);
+    }
+
+
+    /**
+     * Given: 一张S有效票在Locker取 When: Manager取包，Then: Locker返回一个包
+     *
+     * Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
+     */
+    @Test
+    void should_get_bag_when_manager_take_bag_given_valid_s_ticket_and_take_from_Locker() {
+        Bag bag = new SBag();
+        SLocker locker = new SLocker(1);
+        Storage manager = new Storage(singletonList(locker), null, null);
+        STicket ticket = (STicket) manager.saveBag(bag);
 
         Bag returnBag = manager.takeBag(ticket);
 
