@@ -6,6 +6,7 @@ import com.tw.lockerrobot.bag.MBag;
 import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.locker.LLocker;
+import com.tw.lockerrobot.locker.Locker;
 import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.robot.PrimaryLockerRobot;
 import com.tw.lockerrobot.bag.SBag;
@@ -214,7 +215,7 @@ public class LockerRobotBagAdminTest {
         MLocker primaryLocker = new MLocker(1);
         LLocker firstSuperLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
-        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(firstSuperLocker));
         Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new LBag();
@@ -223,11 +224,6 @@ public class LockerRobotBagAdminTest {
         assertThrows(NoCapacityException.class, () -> xiaoying.saveBag(new Bag()));
     }
 
-    /*
-Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
-When manager存包
-Then 无法存入，提示No Capacity
-*/
     @Test
     void should_throw_NoCapacityException_when_manager_save_bag_given_vip_user_l_bag_1_filled_locker() {
         SLocker sLocker = new SLocker(1);
@@ -243,11 +239,6 @@ Then 无法存入，提示No Capacity
         assertThrows(NoCapacityException.class, () -> manager.saveBag(new Bag()));
     }
 
-    /*
-    Given: 一张M有效票在PrimaryLockerRobot取 When: 小樱取包，Then: PrimaryLockerRobot返回一个包
-
-    Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLockerRobot返回一个包
-     */
     @Test
     void should_get_bag_when_xiaoying_take_bag_given_valid_s_ticket() {
         Bag bag = new SBag();
@@ -256,6 +247,23 @@ Then 无法存入，提示No Capacity
         STicket ticket = (STicket) xiaoying.saveBag(bag);
 
         Bag returnBag = xiaoying.takeBag(ticket);
+
+        assertEquals(bag, returnBag);
+    }
+
+    /*
+Given: 一张M有效票在PrimaryLockerRobot取 When: 小樱取包，Then: PrimaryLockerRobot返回一个包
+
+Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLockerRobot返回一个包
+ */
+    @Test
+    void should_get_bag_when_xiaoying_take_bag_given_valid_m_ticket_and_take_from_PrimaryLockerRobot() {
+        Bag bag = new SBag();
+        MLocker primaryLocker = new MLocker(1);
+        PrimaryLockerRobot xiaoying = new PrimaryLockerRobot(singletonList(primaryLocker));
+        MTicket ticket = (MTicket) xiaoying.saveBag(bag);
+
+        Bag returnBag = primaryLocker.takeBag(ticket);
 
         assertEquals(bag, returnBag);
     }

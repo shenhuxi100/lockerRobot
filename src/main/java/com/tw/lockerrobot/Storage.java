@@ -56,7 +56,7 @@ public class Storage {
         throw new NoCapacityException();
     }
 
-    public Bag takeBag(STicket ticket) {
+    public Bag takeBag(Ticket ticket) {
         for (SLocker locker : sLockers) {
             return locker.takeBag(ticket);
         }
