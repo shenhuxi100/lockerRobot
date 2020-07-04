@@ -9,6 +9,7 @@ import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.locker.SLocker;
 import com.tw.lockerrobot.robot.PrimaryLockerRobot;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
+import com.tw.lockerrobot.ticket.STicket;
 import com.tw.lockerrobot.ticket.Ticket;
 
 import java.util.List;
@@ -46,5 +47,13 @@ public class Storage {
         }
 
         throw new NoCapacityException();
+    }
+
+    public Bag takeBag(STicket ticket) {
+        for (SLocker locker : sLockers) {
+            return locker.takeBag(ticket);
+        }
+
+        return null;
     }
 }

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static java.util.Collections.singletonList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -131,5 +132,25 @@ Then 无法存入，提示No Capacity
         MTicket mTicket = (MTicket) manager.saveBag(bag);
 
         assertNotNull(mTicket);
+    }
+
+    /*
+    Given: 一张S有效票在Locker取 When: 小樱取包，Then: Locker返回一个包
+
+    Given: 一张M有效票在PrimaryLockerRobot取 When: 小樱取包，Then: PrimaryLockerRobot返回一个包
+
+    Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLockerRobot返回一个包
+     */
+    @Test
+    void should_get_bag_when_xiaoying_take_bag_given_valid_s_ticket() {
+        Bag bag = new SBag();
+        SLocker sLocker = new SLocker(1);
+        Storage xiaoying = new Storage(singletonList(sLocker));
+
+        STicket ticket = (STicket) xiaoying.saveBag(bag);
+
+        Bag returnBag = xiaoying.takeBag(ticket);
+
+        assertEquals(bag, returnBag);
     }
 }

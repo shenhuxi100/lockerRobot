@@ -14,4 +14,8 @@ public class SLocker extends Locker {
         lockerMap.put(ticket, bag);
         return ticket;
     }
+
+    public Bag takeBag(STicket ticket) {
+        return lockerMap.get(ticket);
+    }
 }
