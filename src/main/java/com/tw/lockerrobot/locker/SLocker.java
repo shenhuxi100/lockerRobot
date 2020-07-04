@@ -1,7 +1,6 @@
 package com.tw.lockerrobot.locker;
 
 import com.tw.lockerrobot.bag.Bag;
-import com.tw.lockerrobot.bag.SBag;
 import com.tw.lockerrobot.ticket.Ticket;
 import com.tw.lockerrobot.ticket.STicket;
 
@@ -18,13 +17,9 @@ public class SLocker extends Locker {
     }
 
     public Ticket saveBag(Bag bag) {
-        if (bag instanceof SBag) {
-            STicket ticket = new STicket();
-            lockerMap.put(ticket, bag);
-            return ticket;
-        }
-
-        return null;
+        STicket ticket = new STicket();
+        lockerMap.put(ticket, bag);
+        return ticket;
     }
 
     public int getRemainingCapacity() {
