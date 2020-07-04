@@ -16,6 +16,7 @@ import com.tw.lockerrobot.ticket.MTicket;
 import com.tw.lockerrobot.ticket.STicket;
 import com.tw.lockerrobot.Storage;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
+import com.tw.lockerrobot.ticket.Ticket;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -251,17 +252,28 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, returnBag);
     }
 
-    /*
-Given: 一张M有效票在PrimaryLockerRobot取 When: 小樱取包，Then: PrimaryLockerRobot返回一个包
-
-Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLockerRobot返回一个包
- */
     @Test
     void should_get_bag_when_xiaoying_take_bag_given_valid_m_ticket_and_take_from_PrimaryLockerRobot() {
         Bag bag = new SBag();
         MLocker primaryLocker = new MLocker(1);
         PrimaryLockerRobot xiaoying = new PrimaryLockerRobot(singletonList(primaryLocker));
         MTicket ticket = (MTicket) xiaoying.saveBag(bag);
+
+        Bag returnBag = primaryLocker.takeBag(ticket);
+
+        assertEquals(bag, returnBag);
+    }
+
+    /*
+
+Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLockerRobot返回一个包
+*/
+    @Test
+    void should_get_bag_when_xiaoying_take_bag_given_valid_L_ticket_and_take_from_SuperLockerRobot() {
+        Bag bag = new SBag();
+        LLocker primaryLocker = new LLocker(1);
+        SuperLockerRobot xiaoying = new SuperLockerRobot(singletonList(primaryLocker));
+        LTicket ticket = (LTicket) xiaoying.saveBag(bag);
 
         Bag returnBag = primaryLocker.takeBag(ticket);
 
