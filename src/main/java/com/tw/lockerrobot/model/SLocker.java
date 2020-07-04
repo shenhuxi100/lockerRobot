@@ -15,10 +15,6 @@ public class SLocker extends Locker {
     }
 
     public Ticket saveBag(Bag bag) {
-        if (lockerMap.size() >= capacity) {
-            throw new NoCapacityException();
-        }
-
         if (bag instanceof SBag) {
             STicket ticket = new STicket();
             lockerMap.put(ticket, bag);
@@ -26,5 +22,9 @@ public class SLocker extends Locker {
         }
 
         return null;
+    }
+
+    public int getRemainingCapacity() {
+        return capacity - lockerMap.size();
     }
 }

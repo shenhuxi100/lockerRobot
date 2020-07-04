@@ -12,6 +12,12 @@ public class Storage {
     }
 
     public Ticket saveBag(Bag bag) {
-        return sLockers.get(0).saveBag(bag);
+        for (SLocker sLocker : sLockers) {
+            if (sLocker.getRemainingCapacity() > 0) {
+                return sLocker.saveBag(bag);
+            }
+        }
+
+        throw new NoCapacityException();
     }
 }
