@@ -1,6 +1,7 @@
 package com.tw.lockerrobot;
 
 import com.tw.lockerrobot.bag.Bag;
+import com.tw.lockerrobot.bag.LBag;
 import com.tw.lockerrobot.bag.MBag;
 import com.tw.lockerrobot.bag.SBag;
 import com.tw.lockerrobot.exception.NoCapacityException;
@@ -43,6 +44,12 @@ public class Storage {
                 if (primaryLockerRobot.getRemainingCapacity() > 0) {
                     return primaryLockerRobot.saveBag(bag);
                 }
+            }
+        }
+
+        if (bag instanceof LBag) {
+            for (SuperLockerRobot superLockerRobot : superLockerRobot) {
+                return superLockerRobot.saveBag(bag);
             }
         }
 
