@@ -14,9 +14,8 @@ import com.tw.lockerrobot.locker.SLocker;
 import com.tw.lockerrobot.ticket.LTicket;
 import com.tw.lockerrobot.ticket.MTicket;
 import com.tw.lockerrobot.ticket.STicket;
-import com.tw.lockerrobot.Storage;
+import com.tw.lockerrobot.LockerRobotManager;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
-import com.tw.lockerrobot.ticket.Ticket;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -31,8 +30,7 @@ public class LockerRobotBagAdminTest {
     @Test
     void should_get_s_ticket_when_xiaoying_save_bag_given_common_user_s_bag_1_unfilled_s_locker() {
         Bag bag = new SBag();
-        SLocker sLocker = new SLocker(1);
-        Storage xiaoying = new Storage(singletonList(sLocker));
+        SLocker xiaoying = new SLocker(1);
 
         STicket ticket = (STicket) xiaoying.saveBag(bag);
 
@@ -42,8 +40,7 @@ public class LockerRobotBagAdminTest {
     @Test
     void should_throw_NoCapacityException_when_xiaoying_save_bag_given_common_user_s_bag_1_fullFilled_locker() {
         Bag bag = new SBag();
-        SLocker sLocker = new SLocker(1);
-        Storage xiaoying = new Storage(singletonList(sLocker));
+        SLocker xiaoying = new SLocker(1);
 
         xiaoying.saveBag(bag);
 
@@ -55,7 +52,7 @@ public class LockerRobotBagAdminTest {
         Bag bag = new SBag();
         SLocker firstSLocker = new SLocker(1);
         SLocker secondSLocker = new SLocker(1);
-        Storage xiaoying = new Storage(Arrays.asList(firstSLocker, secondSLocker));
+        LockerRobotManager xiaoying = new LockerRobotManager(Arrays.asList(firstSLocker, secondSLocker));
 
         xiaoying.saveBag(bag);
         STicket secondTicket = (STicket) xiaoying.saveBag(bag);
@@ -70,7 +67,7 @@ public class LockerRobotBagAdminTest {
         LLocker superLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager manager = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new SBag();
         STicket ticket = (STicket) manager.saveBag(bag);
@@ -85,7 +82,7 @@ public class LockerRobotBagAdminTest {
         LLocker superLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager manager = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new SBag();
         manager.saveBag(bag);
@@ -100,7 +97,7 @@ public class LockerRobotBagAdminTest {
         LLocker superLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager manager = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new MBag();
         MTicket mTicket = (MTicket) manager.saveBag(bag);
@@ -117,7 +114,7 @@ public class LockerRobotBagAdminTest {
         LLocker superLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(primaryLocker1, primaryLocker2));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager xiaoying = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new MBag();
         xiaoying.saveBag(bag);
@@ -135,7 +132,7 @@ public class LockerRobotBagAdminTest {
         LLocker superLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager xiaoying = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new MBag();
         xiaoying.saveBag(bag);
@@ -151,7 +148,7 @@ public class LockerRobotBagAdminTest {
         LLocker superLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager manager = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new MBag();
         manager.saveBag(bag);
@@ -167,7 +164,7 @@ public class LockerRobotBagAdminTest {
         LLocker superLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager manager = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new LBag();
         LTicket lTicket = (LTicket) manager.saveBag(bag);
@@ -184,7 +181,7 @@ public class LockerRobotBagAdminTest {
         LLocker secondSuperLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker, secondSuperLocker));
-        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager xiaoying = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new LBag();
         LTicket lTicket = (LTicket) xiaoying.saveBag(bag);
@@ -201,7 +198,7 @@ public class LockerRobotBagAdminTest {
         LLocker secondSuperLocker = new LLocker(2);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker, secondSuperLocker));
-        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager xiaoying = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new LBag();
         LTicket lTicket = (LTicket) xiaoying.saveBag(bag);
@@ -217,7 +214,7 @@ public class LockerRobotBagAdminTest {
         LLocker firstSuperLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(firstSuperLocker));
-        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        LockerRobotManager xiaoying = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new LBag();
         xiaoying.saveBag(bag);
@@ -231,8 +228,8 @@ public class LockerRobotBagAdminTest {
         MLocker primaryLocker = new MLocker(1);
         LLocker firstSuperLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
-        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker));
-        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(firstSuperLocker));
+        LockerRobotManager manager = new LockerRobotManager(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new LBag();
         manager.saveBag(bag);
@@ -244,7 +241,7 @@ public class LockerRobotBagAdminTest {
     void should_get_bag_when_xiaoying_take_bag_given_valid_s_ticket() {
         Bag bag = new SBag();
         SLocker sLocker = new SLocker(1);
-        Storage xiaoying = new Storage(singletonList(sLocker));
+        LockerRobotManager xiaoying = new LockerRobotManager(singletonList(sLocker));
         STicket ticket = (STicket) xiaoying.saveBag(bag);
 
         Bag returnBag = xiaoying.takeBag(ticket);
@@ -281,7 +278,7 @@ public class LockerRobotBagAdminTest {
         Bag bag = new MBag();
         MLocker primaryLocker = new MLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
-        Storage manager = new Storage(null, singletonList(primaryLockerRobot), null);
+        LockerRobotManager manager = new LockerRobotManager(null, singletonList(primaryLockerRobot), null);
         MTicket ticket = (MTicket) manager.saveBag(bag);
 
         Bag returnBag = manager.takeBag(ticket);
@@ -293,7 +290,7 @@ public class LockerRobotBagAdminTest {
     void should_get_bag_when_manager_take_bag_given_valid_s_ticket_and_take_from_Locker() {
         Bag bag = new SBag();
         SLocker locker = new SLocker(1);
-        Storage manager = new Storage(singletonList(locker), null, null);
+        LockerRobotManager manager = new LockerRobotManager(singletonList(locker), null, null);
         STicket ticket = (STicket) manager.saveBag(bag);
 
         Bag returnBag = manager.takeBag(ticket);
@@ -306,7 +303,7 @@ public class LockerRobotBagAdminTest {
         Bag bag = new LBag();
         LLocker superLocker = new LLocker(1);
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
-        Storage manager = new Storage(null, null, singletonList(superLockerRobot));
+        LockerRobotManager manager = new LockerRobotManager(null, null, singletonList(superLockerRobot));
         LTicket ticket = (LTicket) manager.saveBag(bag);
 
         Bag returnBag = manager.takeBag(ticket);
@@ -367,9 +364,6 @@ public class LockerRobotBagAdminTest {
         assertThrows(InvalidTicketException.class, () -> superLockerRobot.takeBag(sTicket));
     }
 
-    /**
-     * Given: 一张M有效票在其他Locker取 When: 小樱取包，Then: 提示Invalid Ticket
-     */
     @Test
     void should_throw_InvalidTicket_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_s_Locker() {
         MLocker primaryLocker = new MLocker(1);

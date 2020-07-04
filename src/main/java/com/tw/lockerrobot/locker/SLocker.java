@@ -1,6 +1,7 @@
 package com.tw.lockerrobot.locker;
 
 import com.tw.lockerrobot.bag.Bag;
+import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.ticket.STicket;
 import com.tw.lockerrobot.ticket.Ticket;
 
@@ -10,8 +11,12 @@ public class SLocker extends Locker {
     }
 
     public Ticket saveBag(Bag bag) {
-        STicket ticket = new STicket();
-        lockerMap.put(ticket, bag);
-        return ticket;
+        if (getRemainingCapacity() > 0) {
+            STicket ticket = new STicket();
+            lockerMap.put(ticket, bag);
+            return ticket;
+        }
+
+        throw new NoCapacityException();
     }
 }
