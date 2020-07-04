@@ -6,7 +6,6 @@ import com.tw.lockerrobot.ticket.Ticket;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public abstract class Locker {
     protected int capacity;

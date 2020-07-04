@@ -4,7 +4,6 @@ import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.locker.LLocker;
 import com.tw.lockerrobot.locker.Locker;
-import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.ticket.Ticket;
 
 import java.util.Comparator;

@@ -1,9 +1,7 @@
 package com.tw.lockerrobot.robot;
 
 import com.tw.lockerrobot.bag.Bag;
-import com.tw.lockerrobot.locker.LLocker;
 import com.tw.lockerrobot.locker.Locker;
-import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.ticket.Ticket;
 
 import java.util.List;
