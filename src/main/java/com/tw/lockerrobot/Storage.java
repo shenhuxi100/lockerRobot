@@ -4,6 +4,8 @@ import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.bag.MBag;
 import com.tw.lockerrobot.bag.SBag;
 import com.tw.lockerrobot.exception.NoCapacityException;
+import com.tw.lockerrobot.locker.Locker;
+import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.locker.SLocker;
 import com.tw.lockerrobot.robot.PrimaryLockerRobot;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
@@ -37,7 +39,9 @@ public class Storage {
 
         if (bag instanceof MBag) {
             for (PrimaryLockerRobot primaryLockerRobot : primaryLockerRobot) {
-                return primaryLockerRobot.saveBag(bag);
+                if (primaryLockerRobot.getRemainingCapacity() > 0) {
+                    return primaryLockerRobot.saveBag(bag);
+                }
             }
         }
 

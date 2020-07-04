@@ -88,11 +88,22 @@ public class LockerRobotBagAdminTest {
         assertThrows(NoCapacityException.class, () -> manager.saveBag(new Bag()));
     }
 
-    /*
-Given 普通用户M包，PrimaryLockerRobot管理有2个M Locker未满
-When 小樱存包
-Then 通过PrimaryLockerRobot存入第1个柜子，返回M类型票据
+    @Test
+    void should_get_m_ticket_by_primary_locker_robot_when_manager_save_bag_given_vip_user_m_bag_1_unfilled_m_locker_and_s_unfilled_locker() {
+        SLocker sLocker = new SLocker(1);
+        MLocker primaryLocker = new MLocker(1);
+        LLocker superLocker = new LLocker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
+        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
+        Bag bag = new MBag();
+        MTicket mTicket = (MTicket) manager.saveBag(bag);
+
+        assertNotNull(mTicket);
+    }
+
+    /*
 Given 普通用户M包，PrimaryLockerRobot管理有2个M Locker未满，第一个柜子已满
 When 小樱存包
 Then 通过PrimaryLockerRobot存入第2个柜子，返回M类型票据
@@ -106,15 +117,17 @@ When manager存包
 Then 无法存入，提示No Capacity
      */
     @Test
-    void should_get_m_ticket_by_primary_locker_robot_when_manager_save_bag_given_vip_user_m_bag_1_unfilled_m_locker_and_s_unfilled_locker() {
+    void should_get_m_ticket_by_primary_locker_robot_2nd_locker_when_xiaoying_save_bag_given_common_user_m_bag_and_PrimaryLockerRobot_1_filled_m_locker_2nd_unfilled_locker() {
         SLocker sLocker = new SLocker(1);
-        MLocker primaryLocker = new MLocker(1);
+        MLocker primaryLocker1 = new MLocker(1);
+        MLocker primaryLocker2 = new MLocker(1);
         LLocker superLocker = new LLocker(1);
-        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(primaryLocker1, primaryLocker2));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
         Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new MBag();
+        manager.saveBag(bag);
         MTicket mTicket = (MTicket) manager.saveBag(bag);
 
         assertNotNull(mTicket);

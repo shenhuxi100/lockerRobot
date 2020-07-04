@@ -6,13 +6,10 @@ import com.tw.lockerrobot.ticket.MTicket;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MLocker {
-    private int capacity;
-
-    private Map<MTicket, Bag> lockerMap = new HashMap<>();
+public class MLocker extends Locker{
 
     public MLocker(int capacity) {
-        this.capacity = capacity;
+        super(capacity);
     }
 
     public MTicket saveBag(Bag bag) {
