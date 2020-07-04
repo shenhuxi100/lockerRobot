@@ -5,6 +5,10 @@ Given 普通用户S包，小樱有1个S Locker未满
 When 小樱存包
 Then 存入S Locker，返回S类型票据
 
+Given 普通用户S包，小樱有2个S Locker未满, 第一个locker已满
+When 小樱存包
+Then 存入第二个 Locker，返回S类型票据
+
 Given 普通用户S包，小樱有1个S Locker已满
 When 小樱存包
 Then 无法存入，提示No Capacity

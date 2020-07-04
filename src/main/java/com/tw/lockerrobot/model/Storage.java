@@ -1,5 +1,7 @@
 package com.tw.lockerrobot.model;
 
+import com.tw.lockerrobot.exception.NoCapacityException;
+
 import java.util.List;
 
 public class Storage {
