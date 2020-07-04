@@ -342,14 +342,6 @@ public class LockerRobotBagAdminTest {
         assertThrows(InvalidTicketException.class, () -> xiaoying.takeBag(new STicket()));
     }
 
-    /**
-     *
-     * Given: 一张S有效票在PrimaryLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
-     *
-     * Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
-     *
-     * Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket Type
-     */
     @Test
     void should_throw_InvalidTicketType_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_PrimaryLockerRobot() {
         MLocker primaryLocker = new MLocker(1);
@@ -360,5 +352,22 @@ public class LockerRobotBagAdminTest {
         STicket sTicket = (STicket) xiaoying.saveBag(bag);
 
         assertThrows(InvalidTicketException.class, () -> primaryLockerRobot.takeBag(sTicket));
+    }
+
+    /**
+     * Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket
+     *
+     * Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket
+     */
+    @Test
+    void should_throw_InvalidTicketType_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_SuperLockerRobot() {
+        MLocker superLocker = new MLocker(1);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
+
+        Bag bag = new SBag();
+        SLocker xiaoying = new SLocker(1);
+        STicket sTicket = (STicket) xiaoying.saveBag(bag);
+
+        assertThrows(InvalidTicketException.class, () -> superLockerRobot.takeBag(sTicket));
     }
 }

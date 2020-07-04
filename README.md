@@ -82,8 +82,8 @@ Given: 一张无效M票在Locker取 When: 小樱取包，Then: 提示Invalid Tic
 
 Given: 一张无效S票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket
 
-Given: 一张S有效票在PrimaryLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
+Given: 一张S有效票在PrimaryLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket
 
-Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket Type
+Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket
 
-Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket Type
+Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket
