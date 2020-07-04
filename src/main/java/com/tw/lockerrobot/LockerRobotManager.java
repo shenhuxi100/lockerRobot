@@ -4,9 +4,9 @@ import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.bag.LBag;
 import com.tw.lockerrobot.bag.MBag;
 import com.tw.lockerrobot.bag.SBag;
-import com.tw.lockerrobot.exception.InvalidTicketException;
 import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.locker.SLocker;
+import com.tw.lockerrobot.robot.BaseLockerRobot;
 import com.tw.lockerrobot.robot.PrimaryLockerRobot;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
 import com.tw.lockerrobot.ticket.LTicket;
@@ -30,19 +30,24 @@ public class LockerRobotManager {
     public Ticket saveBag(Bag bag) {
         if (bag instanceof SBag) {
             for (SLocker sLocker : sLockers) {
-                return sLocker.saveBag(bag);
+                if (sLocker.getRemainingCapacity() > 0) {
+                    return sLocker.saveBag(bag);
+                }
             }
         }
 
         if (bag instanceof MBag) {
             for (PrimaryLockerRobot primaryLockerRobot : primaryLockerRobot) {
-                return primaryLockerRobot.saveBag(bag);
+                if (primaryLockerRobot.getRemainingCapacity() > 0) {
+                    return primaryLockerRobot.saveBag(bag);
+                }
             }
         }
 
         if (bag instanceof LBag) {
             for (SuperLockerRobot superLockerRobot : superLockerRobot) {
-                return superLockerRobot.saveBag(bag);
+                if(superLockerRobot.getRemainingCapacity() > 0 )
+                    return superLockerRobot.saveBag(bag);
             }
         }
 
@@ -57,7 +62,7 @@ public class LockerRobotManager {
         }
 
         if (ticket instanceof MTicket) {
-            for (PrimaryLockerRobot primaryLockerRobot : primaryLockerRobot) {
+            for (BaseLockerRobot primaryLockerRobot : primaryLockerRobot) {
                 if (primaryLockerRobot.isValidTicket(ticket)) {
                     return primaryLockerRobot.takeBag(ticket);
                 }
@@ -65,13 +70,13 @@ public class LockerRobotManager {
         }
 
         if (ticket instanceof LTicket) {
-            for (SuperLockerRobot superLockerRobot : superLockerRobot) {
+            for (BaseLockerRobot superLockerRobot : superLockerRobot) {
                 if (superLockerRobot.isValidTicket(ticket)) {
                     return superLockerRobot.takeBag(ticket);
                 }
             }
         }
 
-        throw new InvalidTicketException();
+        throw new NoCapacityException();
     }
 }

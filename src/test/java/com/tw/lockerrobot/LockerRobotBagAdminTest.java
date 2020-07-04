@@ -1,4 +1,4 @@
-package com.tw.lockerRobot;
+package com.tw.lockerrobot;
 
 
 import com.tw.lockerrobot.bag.LBag;
@@ -14,7 +14,6 @@ import com.tw.lockerrobot.locker.SLocker;
 import com.tw.lockerrobot.ticket.LTicket;
 import com.tw.lockerrobot.ticket.MTicket;
 import com.tw.lockerrobot.ticket.STicket;
-import com.tw.lockerrobot.LockerRobotManager;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
 import org.junit.jupiter.api.Test;
 
