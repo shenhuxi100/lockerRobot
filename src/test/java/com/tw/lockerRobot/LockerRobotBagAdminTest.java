@@ -174,38 +174,49 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, superLocker.takeBag(lTicket));
     }
 
-        /*
-    Given 普通用户L包，SuperLockerRobot管理有2个L Locker未满，第1个储物柜比第2个储物柜可用容量多1
-    When 小樱存包
-    Then 通过SuperLockerRobot存入第1个柜子，返回L类型票据
-
-    Given 普通用户L包，SuperLockerRobot管理有2个L Locker未满，第2个储物柜比第1个储物柜可用容量多1
-    When 小樱存包
-    Then 通过SuperLockerRobot存入第2个柜子，返回L类型票据
-
-    Given 普通用户L包，SuperLockerRobot管理有1个L Locker未满
-    When 小樱存包
-    Then 无法存入，提示No Capacity
-
-    Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
-    When manager存包
-    Then 无法存入，提示No Capacity
-     */
     @Test
-    void should_get_l_ticket_by_superLockerRobot_when_xiaoying_save_bag_given_vip_user_l_bag_1st_unfilled_2_usable_l_locker_and_2nd_1_usable_locker() {
+    void should_get_l_ticket_by_superLockerRobot_first_locker_when_xiaoying_save_bag_given_vip_user_l_bag_1st_unfilled_2_usable_l_locker_and_2nd_1_usable_locker() {
         SLocker sLocker = new SLocker(1);
         MLocker primaryLocker = new MLocker(1);
         LLocker firstSuperLocker = new LLocker(2);
         LLocker secondSuperLocker = new LLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker, secondSuperLocker));
-        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
 
         Bag bag = new LBag();
-        LTicket lTicket = (LTicket) manager.saveBag(bag);
+        LTicket lTicket = (LTicket) xiaoying.saveBag(bag);
 
         assertNotNull(lTicket);
         assertEquals(bag, firstSuperLocker.takeBag(lTicket));
+    }
+
+    /*
+
+
+Given 普通用户L包，SuperLockerRobot管理有1个L Locker未满
+When 小樱存包
+Then 无法存入，提示No Capacity
+
+Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
+When manager存包
+Then 无法存入，提示No Capacity
+*/
+    @Test
+    void should_get_l_ticket_by_superLockerRobot_second_locker_when_xiaoying_save_bag_given_vip_user_l_bag_1st_unfilled_1_usable_l_locker_and_2nd_2_usable_locker() {
+        SLocker sLocker = new SLocker(1);
+        MLocker primaryLocker = new MLocker(1);
+        LLocker firstSuperLocker = new LLocker(1);
+        LLocker secondSuperLocker = new LLocker(2);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker, secondSuperLocker));
+        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+
+        Bag bag = new LBag();
+        LTicket lTicket = (LTicket) xiaoying.saveBag(bag);
+
+        assertNotNull(lTicket);
+        assertEquals(bag, secondSuperLocker.takeBag(lTicket));
     }
 
     /*

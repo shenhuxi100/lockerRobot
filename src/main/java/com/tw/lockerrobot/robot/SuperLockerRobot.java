@@ -6,6 +6,7 @@ import com.tw.lockerrobot.locker.Locker;
 import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.ticket.Ticket;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SuperLockerRobot {
@@ -16,6 +17,7 @@ public class SuperLockerRobot {
     }
 
     public Ticket saveBag(Bag bag) {
+        lockers.sort(Comparator.comparing(Locker::getRemainingCapacity).reversed());
         for (LLocker locker : lockers) {
             if (locker.getRemainingCapacity() > 0)
                 return locker.saveBag(bag);
