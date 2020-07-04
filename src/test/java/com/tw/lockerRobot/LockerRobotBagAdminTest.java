@@ -129,14 +129,14 @@ Then 无法存入，提示No Capacity
 
         Bag bag = new MBag();
         manager.saveBag(bag);
-        MTicket mTicket = (MTicket) manager.saveBag(bag);
+        Bag myBag = new MBag();
+        MTicket mTicket = (MTicket) manager.saveBag(myBag);
 
         assertNotNull(mTicket);
+        assertEquals(myBag, primaryLocker2.takeBag(mTicket));
     }
 
     /*
-    Given: 一张S有效票在Locker取 When: 小樱取包，Then: Locker返回一个包
-
     Given: 一张M有效票在PrimaryLockerRobot取 When: 小樱取包，Then: PrimaryLockerRobot返回一个包
 
     Given: 一张L有效票在SuperLockerRobot取 When: 小樱取包，Then: SuperLockerRobot返回一个包
@@ -146,7 +146,6 @@ Then 无法存入，提示No Capacity
         Bag bag = new SBag();
         SLocker sLocker = new SLocker(1);
         Storage xiaoying = new Storage(singletonList(sLocker));
-
         STicket ticket = (STicket) xiaoying.saveBag(bag);
 
         Bag returnBag = xiaoying.takeBag(ticket);

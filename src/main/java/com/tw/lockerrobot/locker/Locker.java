@@ -1,6 +1,7 @@
 package com.tw.lockerrobot.locker;
 
 import com.tw.lockerrobot.bag.Bag;
+import com.tw.lockerrobot.ticket.STicket;
 import com.tw.lockerrobot.ticket.Ticket;
 
 import java.util.HashMap;
@@ -17,5 +18,9 @@ public class Locker {
 
     public int getRemainingCapacity() {
         return capacity - lockerMap.size();
+    }
+
+    public Bag takeBag(Ticket ticket) {
+        return lockerMap.get(ticket);
     }
 }
