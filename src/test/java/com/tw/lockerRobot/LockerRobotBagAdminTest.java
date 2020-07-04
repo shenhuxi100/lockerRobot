@@ -208,15 +208,6 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, secondSuperLocker.takeBag(lTicket));
     }
 
-    /*
-Given 普通用户L包，SuperLockerRobot管理有1个L Locker未满
-When 小樱存包
-Then 无法存入，提示No Capacity
-
-Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
-When manager存包
-Then 无法存入，提示No Capacity
-*/
     @Test
     void should_throw_NoCapacityException_when_xiaoying_save_bag_given_common_user_l_bag_1_filled_locker() {
         SLocker sLocker = new SLocker(1);
@@ -230,6 +221,26 @@ Then 无法存入，提示No Capacity
         xiaoying.saveBag(bag);
 
         assertThrows(NoCapacityException.class, () -> xiaoying.saveBag(new Bag()));
+    }
+
+    /*
+Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
+When manager存包
+Then 无法存入，提示No Capacity
+*/
+    @Test
+    void should_throw_NoCapacityException_when_manager_save_bag_given_vip_user_l_bag_1_filled_locker() {
+        SLocker sLocker = new SLocker(1);
+        MLocker primaryLocker = new MLocker(1);
+        LLocker firstSuperLocker = new LLocker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker));
+        Storage manager = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+
+        Bag bag = new LBag();
+        manager.saveBag(bag);
+
+        assertThrows(NoCapacityException.class, () -> manager.saveBag(new Bag()));
     }
 
     /*
