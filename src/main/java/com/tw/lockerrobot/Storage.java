@@ -10,6 +10,7 @@ import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.locker.SLocker;
 import com.tw.lockerrobot.robot.PrimaryLockerRobot;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
+import com.tw.lockerrobot.ticket.LTicket;
 import com.tw.lockerrobot.ticket.MTicket;
 import com.tw.lockerrobot.ticket.STicket;
 import com.tw.lockerrobot.ticket.Ticket;
@@ -68,6 +69,14 @@ public class Storage {
             for (PrimaryLockerRobot primaryLockerRobot : primaryLockerRobot) {
                 if (primaryLockerRobot.isValidTicket(ticket)) {
                     return primaryLockerRobot.takeBag(ticket);
+                }
+            }
+        }
+
+        if (ticket instanceof LTicket) {
+            for (SuperLockerRobot superLockerRobot : superLockerRobot) {
+                if (superLockerRobot.isValidTicket(ticket)) {
+                    return superLockerRobot.takeBag(ticket);
                 }
             }
         }

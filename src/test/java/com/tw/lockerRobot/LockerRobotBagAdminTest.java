@@ -6,7 +6,6 @@ import com.tw.lockerrobot.bag.MBag;
 import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.locker.LLocker;
-import com.tw.lockerrobot.locker.Locker;
 import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.robot.PrimaryLockerRobot;
 import com.tw.lockerrobot.bag.SBag;
@@ -16,7 +15,6 @@ import com.tw.lockerrobot.ticket.MTicket;
 import com.tw.lockerrobot.ticket.STicket;
 import com.tw.lockerrobot.Storage;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
-import com.tw.lockerrobot.ticket.Ticket;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -276,11 +274,6 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, returnBag);
     }
 
-    /**
-     * Given: 一张S有效票在Locker取 When: Manager取包，Then: Locker返回一个包
-     * <p>
-     * Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
-     */
     @Test
     void should_get_bag_when_manager_take_bag_given_valid_m_ticket_and_take_from_PrimaryLockerRobot() {
         Bag bag = new MBag();
@@ -294,18 +287,28 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, returnBag);
     }
 
-
-    /**
-     * Given: 一张S有效票在Locker取 When: Manager取包，Then: Locker返回一个包
-     *
-     * Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
-     */
     @Test
     void should_get_bag_when_manager_take_bag_given_valid_s_ticket_and_take_from_Locker() {
         Bag bag = new SBag();
         SLocker locker = new SLocker(1);
         Storage manager = new Storage(singletonList(locker), null, null);
         STicket ticket = (STicket) manager.saveBag(bag);
+
+        Bag returnBag = manager.takeBag(ticket);
+
+        assertEquals(bag, returnBag);
+    }
+
+    /**
+     * Given: 一张L有效票在SuperLockerRobot取 When: Manager取包，Then: SuperLockerRobot返回一个包
+     */
+    @Test
+    void should_get_bag_when_manager_take_bag_given_valid_l_ticket_and_take_from_SuperLockerRobot() {
+        Bag bag = new LBag();
+        LLocker superLocker = new LLocker(1);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
+        Storage manager = new Storage(null, null, singletonList(superLockerRobot));
+        LTicket ticket = (LTicket) manager.saveBag(bag);
 
         Bag returnBag = manager.takeBag(ticket);
 

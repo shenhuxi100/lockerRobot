@@ -8,36 +8,20 @@ import com.tw.lockerrobot.ticket.Ticket;
 
 import java.util.List;
 
-public class PrimaryLockerRobot {
-
-    private List<MLocker> lockers;
-
-    public PrimaryLockerRobot(List<MLocker> lockers) {
-        this.lockers = lockers;
+public class PrimaryLockerRobot extends BaseLockerRobot {
+    public PrimaryLockerRobot(List<Locker> lockers) {
+        super(lockers);
     }
 
     public Ticket saveBag(Bag bag) {
-        for (MLocker locker : lockers) {
-            if (locker.getRemainingCapacity() > 0)
-                return locker.saveBag(bag);
+        for (Locker locker : lockers) {
+            MLocker mLocker = (MLocker) locker;
+
+            if (mLocker.getRemainingCapacity() > 0) {
+                return mLocker.saveBag(bag);
+            }
         }
 
         throw new NoCapacityException();
-    }
-
-    public int getRemainingCapacity() {
-        return lockers.stream().mapToInt(MLocker::getRemainingCapacity).sum();
-    }
-
-    public Bag takeBag(Ticket ticket) {
-        for (Locker locker : lockers) {
-            return locker.takeBag(ticket);
-        }
-
-        throw null;
-    }
-
-    public boolean isValidTicket(Ticket ticket) {
-        return lockers.stream().anyMatch(locker -> locker.isValidTicket(ticket));
     }
 }

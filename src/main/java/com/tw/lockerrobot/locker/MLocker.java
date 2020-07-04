@@ -2,17 +2,14 @@ package com.tw.lockerrobot.locker;
 
 import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.ticket.MTicket;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.tw.lockerrobot.ticket.Ticket;
 
 public class MLocker extends Locker{
-
     public MLocker(int capacity) {
         super(capacity);
     }
 
-    public MTicket saveBag(Bag bag) {
+    public Ticket saveBag(Bag bag) {
         MTicket ticket = new MTicket();
         lockerMap.put(ticket, bag);
         return ticket;
