@@ -1,6 +1,7 @@
 package com.tw.lockerrobot.robot;
 
 import com.tw.lockerrobot.bag.Bag;
+import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.locker.MLocker;
 import com.tw.lockerrobot.ticket.Ticket;
 
@@ -20,7 +21,7 @@ public class PrimaryLockerRobot {
                 return locker.saveBag(bag);
         }
 
-        return null;
+        throw new NoCapacityException();
     }
 
     public int getRemainingCapacity() {

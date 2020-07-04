@@ -53,11 +53,11 @@ Given 普通用户L包，SuperLockerRobot管理有2个L Locker未满，第2个�
 When 小樱存包
 Then 通过SuperLockerRobot存入第2个柜子，返回L类型票据
 
-Given 普通用户L包，SuperLockerRobot管理有1个L Locker未满
+Given 普通用户L包，SuperLockerRobot管理有1个L Locker已满
 When 小樱存包
 Then 无法存入，提示No Capacity
 
-Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
+Given VIP用户L包，SuperLockerRobot管理有1个L Locker已满
 When manager存包
 Then 无法存入，提示No Capacity
 

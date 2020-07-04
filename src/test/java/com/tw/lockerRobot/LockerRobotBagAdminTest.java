@@ -175,7 +175,7 @@ public class LockerRobotBagAdminTest {
     }
 
     @Test
-    void should_get_l_ticket_by_superLockerRobot_first_locker_when_xiaoying_save_bag_given_vip_user_l_bag_1st_unfilled_2_usable_l_locker_and_2nd_1_usable_locker() {
+    void should_get_l_ticket_by_superLockerRobot_first_locker_when_xiaoying_save_bag_given_common_user_l_bag_1st_unfilled_2_usable_l_locker_and_2nd_1_usable_locker() {
         SLocker sLocker = new SLocker(1);
         MLocker primaryLocker = new MLocker(1);
         LLocker firstSuperLocker = new LLocker(2);
@@ -191,19 +191,8 @@ public class LockerRobotBagAdminTest {
         assertEquals(bag, firstSuperLocker.takeBag(lTicket));
     }
 
-    /*
-
-
-Given 普通用户L包，SuperLockerRobot管理有1个L Locker未满
-When 小樱存包
-Then 无法存入，提示No Capacity
-
-Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
-When manager存包
-Then 无法存入，提示No Capacity
-*/
     @Test
-    void should_get_l_ticket_by_superLockerRobot_second_locker_when_xiaoying_save_bag_given_vip_user_l_bag_1st_unfilled_1_usable_l_locker_and_2nd_2_usable_locker() {
+    void should_get_l_ticket_by_superLockerRobot_second_locker_when_xiaoying_save_bag_given_common_user_l_bag_1st_unfilled_1_usable_l_locker_and_2nd_2_usable_locker() {
         SLocker sLocker = new SLocker(1);
         MLocker primaryLocker = new MLocker(1);
         LLocker firstSuperLocker = new LLocker(1);
@@ -217,6 +206,30 @@ Then 无法存入，提示No Capacity
 
         assertNotNull(lTicket);
         assertEquals(bag, secondSuperLocker.takeBag(lTicket));
+    }
+
+    /*
+Given 普通用户L包，SuperLockerRobot管理有1个L Locker未满
+When 小樱存包
+Then 无法存入，提示No Capacity
+
+Given VIP用户L包，SuperLockerRobot管理有1个L Locker未满
+When manager存包
+Then 无法存入，提示No Capacity
+*/
+    @Test
+    void should_throw_NoCapacityException_when_xiaoying_save_bag_given_common_user_l_bag_1_filled_locker() {
+        SLocker sLocker = new SLocker(1);
+        MLocker primaryLocker = new MLocker(1);
+        LLocker firstSuperLocker = new LLocker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(firstSuperLocker));
+        Storage xiaoying = new Storage(singletonList(sLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+
+        Bag bag = new LBag();
+        xiaoying.saveBag(bag);
+
+        assertThrows(NoCapacityException.class, () -> xiaoying.saveBag(new Bag()));
     }
 
     /*
