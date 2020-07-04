@@ -16,6 +16,7 @@ import com.tw.lockerrobot.ticket.MTicket;
 import com.tw.lockerrobot.ticket.STicket;
 import com.tw.lockerrobot.Storage;
 import com.tw.lockerrobot.robot.SuperLockerRobot;
+import com.tw.lockerrobot.ticket.Ticket;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -343,7 +344,7 @@ public class LockerRobotBagAdminTest {
     }
 
     @Test
-    void should_throw_InvalidTicketType_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_PrimaryLockerRobot() {
+    void should_throw_InvalidTicket_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_PrimaryLockerRobot() {
         MLocker primaryLocker = new MLocker(1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(primaryLocker));
 
@@ -354,13 +355,8 @@ public class LockerRobotBagAdminTest {
         assertThrows(InvalidTicketException.class, () -> primaryLockerRobot.takeBag(sTicket));
     }
 
-    /**
-     * Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket
-     *
-     * Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket
-     */
     @Test
-    void should_throw_InvalidTicketType_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_SuperLockerRobot() {
+    void should_throw_InvalidTicket_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_SuperLockerRobot() {
         MLocker superLocker = new MLocker(1);
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(superLocker));
 
@@ -369,5 +365,19 @@ public class LockerRobotBagAdminTest {
         STicket sTicket = (STicket) xiaoying.saveBag(bag);
 
         assertThrows(InvalidTicketException.class, () -> superLockerRobot.takeBag(sTicket));
+    }
+
+    /**
+     * Given: 一张M有效票在其他Locker取 When: 小樱取包，Then: 提示Invalid Ticket
+     */
+    @Test
+    void should_throw_InvalidTicket_when_xiaoying_take_bag_given_invalid_s_ticket_taking_from_s_Locker() {
+        MLocker primaryLocker = new MLocker(1);
+        PrimaryLockerRobot xiaoying = new PrimaryLockerRobot(singletonList(primaryLocker));
+        Bag bag = new MBag();
+        MTicket mTicket = (MTicket) xiaoying.saveBag(bag);
+
+        SLocker sLocker = new SLocker(1);
+        assertThrows(InvalidTicketException.class, () -> sLocker.takeBag(mTicket));
     }
 }

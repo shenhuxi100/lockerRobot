@@ -86,4 +86,4 @@ Given: 一张S有效票在PrimaryLockerRobot取 When: 小樱取包，Then: 提�
 
 Given: 一张S有效票在SuperLockerRobot取 When: 小樱取包，Then: 提示Invalid Ticket
 
-Given: 一张M有效票在Locker取 When: 小樱取包，Then: 提示Invalid Ticket
+Given: 一张M有效票在S Locker取 When: 小樱取包，Then: 提示Invalid Ticket
