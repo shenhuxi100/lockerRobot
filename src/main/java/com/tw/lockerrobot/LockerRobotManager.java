@@ -4,6 +4,7 @@ import com.tw.lockerrobot.bag.Bag;
 import com.tw.lockerrobot.bag.LBag;
 import com.tw.lockerrobot.bag.MBag;
 import com.tw.lockerrobot.bag.SBag;
+import com.tw.lockerrobot.exception.InvalidTicketException;
 import com.tw.lockerrobot.exception.NoCapacityException;
 import com.tw.lockerrobot.locker.SLocker;
 import com.tw.lockerrobot.robot.PrimaryLockerRobot;
@@ -20,10 +21,6 @@ public class LockerRobotManager {
     private List<PrimaryLockerRobot> primaryLockerRobot;
     private List<SLocker> sLockers;
 
-    public LockerRobotManager(List<SLocker> lockers) {
-        this.sLockers = lockers;
-    }
-
     public LockerRobotManager(List<SLocker> lockers, List<PrimaryLockerRobot> primaryLockerRobot, List<SuperLockerRobot> superLockerRobot) {
         this.sLockers = lockers;
         this.primaryLockerRobot = primaryLockerRobot;
@@ -33,17 +30,13 @@ public class LockerRobotManager {
     public Ticket saveBag(Bag bag) {
         if (bag instanceof SBag) {
             for (SLocker sLocker : sLockers) {
-                if (sLocker.getRemainingCapacity() > 0) {
-                    return sLocker.saveBag(bag);
-                }
+                return sLocker.saveBag(bag);
             }
         }
 
         if (bag instanceof MBag) {
             for (PrimaryLockerRobot primaryLockerRobot : primaryLockerRobot) {
-                if (primaryLockerRobot.getRemainingCapacity() > 0) {
-                    return primaryLockerRobot.saveBag(bag);
-                }
+                return primaryLockerRobot.saveBag(bag);
             }
         }
 
@@ -79,6 +72,6 @@ public class LockerRobotManager {
             }
         }
 
-        return null;
+        throw new InvalidTicketException();
     }
 }
